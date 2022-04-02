@@ -1,14 +1,22 @@
 import React from "react";
-import { Divider } from 'antd';
+import { Space, Typography, Divider } from 'antd';
+import styles from "./index.modules.css";
+// import logo from "./img/man.svg";
 
-const Header = ({img_logo, ref1_text, ref1, ref2_text, ref2, ref3_text, ref3}) => {
-    return ( <>
-          <img src={img_logo}></img>
-          <a href={ref1}>{ref1_text}</a>
-          <a href={ref2}>{ref2_text}</a>
-          <a href={ref3}>{ref3_text}</a>
-          <Divider/>
-          </>
+const { Text, Link } = Typography;
+
+const Header = ({ ref1_text, ref1, ref2_text, ref2, ref3_text, ref3 }) => {
+    return (<>
+        <header className={styles.header}>
+            <img src="logo" alt="Remix" />
+            <Space split={<Divider type="vertical" />}>
+                <Link href={ref1} target="_blank">{ref1_text}</Link>
+                <Link href={ref2} target="_blank">{ref2_text}</Link>
+                <Link href={ref3} target="_blank">{ref3_text}</Link>
+            </Space>
+        </header>
+        <Divider />
+    </>
     );
 };
 
