@@ -1,6 +1,20 @@
 .listposts {
-    display: flex;
+    display: grid;
     align-items: center;
     padding: 20px 150px;
-    justify-content: center; 
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+}
+
+@media (max-width: 880px) {
+    .listposts {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 400px) {
+    .listposts {
+        grid-template-columns: 1fr;
+    }
 }
