@@ -2,11 +2,7 @@ const onResponse = (response) => {
     if (response.ok) {
         return response.json()
     }
-
-    return Promise.reject({
-                            message: 'Сервер не доступен',
-                            error: response
-                        })
+    return Promise.reject( response )
 }
 
 class Api {
@@ -34,30 +30,28 @@ class Api {
     //         .then(onResponse)
     // }
 
-    // updateCat(id, bodyData) {
-    //     return fetch(`${this._url}/update/${id}`, {
-    //             method: "PUT",
-    //             headers: this._headers,
-    //             body: JSON.stringify(bodyData)
-    //         })
-    //         .then(onResponse)
-    // }
+    changePostLike(isLike, id) {
+        return fetch(`${this._url}/posts/likes/${id}`, {
+                method: isLike ? "PUT" : "DELETE",
+                headers: this._headers,
+            })
+            .then(onResponse)
+    }
 
-    // deleteCat(id) {
-    //     return fetch(`${this._url}/delete/${id}`, {
-    //             method: "DELETE",
-    //             headers: this._headers,
-    //         })
-    //         .then(onResponse)
-    // }
-
+    deletePost(id) {
+        return fetch(`${this._url}/posts/${id}`, {
+                method: "DELETE",
+                headers: this._headers,
+            })
+            .then(onResponse)
+    }
 }
 
 const api = new Api({
     url: 'https://api.react-learning.ru',
     headers: {
-        //  "Content-type": "application/json",
-        //  "Accept": "application/json",
+        "Content-type": "application/json",
+        "Accept": "application/json",
         authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJiNmZmYzA5YjEyZjgwZjRjMTBiYjMiLCJpYXQiOjE2NDcwMTM4ODYsImV4cCI6MTY3ODU0OTg4Nn0.v2qKJI2jlIG92Uqgds6RGoUW_ycXOiIK_pABL_yGoZw'
         }
 })
