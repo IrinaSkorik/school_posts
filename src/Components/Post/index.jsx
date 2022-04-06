@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar, Timeline } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
-import { LikeOutlined, LikeFilled, LikeTwoTone, DeleteFilled } from '@ant-design/icons';
+import { LikeOutlined, LikeFilled, LikeTwoTone, DeleteTwoTone } from '@ant-design/icons';
 import styles from "./index.modules.css";
 
 const Post = ({ _id, author, title, tags, created_at, updated_at, text, likes, user, onChangePostLike, onDeletePost }) => {
@@ -16,8 +16,8 @@ const Post = ({ _id, author, title, tags, created_at, updated_at, text, likes, u
   const isFavourite = likes.some((el) => el === user._id);
 
   const ValueLike = ({likes, isFavourite, onClick}) => {
-    if  (isFavourite) { return (<LikeTwoTone twoToneColor="#eb2f96" onClick={onClick} />) }
-    else if (likes.length > 0) { return (<LikeFilled onClick={onClick}  />) }
+    if  (isFavourite) { return (<LikeTwoTone twoToneColor="#FF0000" onClick={onClick} />) }
+    else if (likes.length > 0) { return (<LikeFilled onClick={onClick} />) }
     else { return (<LikeOutlined onClick={onClick} />) }
   };
 
@@ -49,7 +49,7 @@ const Post = ({ _id, author, title, tags, created_at, updated_at, text, likes, u
           <div>
             <ValueLike likes={likes} isFavourite={isFavourite} onClick={handleClick} /> {likes.length}
           </div>
-          <DeleteFilled onClick={handleClickDelete}/>
+          <DeleteTwoTone twoToneColor="#FF0000" onClick={handleClickDelete}/>
         </div>
       </Card>
   )
