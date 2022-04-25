@@ -1,12 +1,23 @@
-import React from "react";
+import React,  { useState } from "react";
 import { Pagination } from 'antd';
 import Post from "../Post";
 import styles from "./index.modules.css";
 
-const ListPosts = ({ data, user, onChangePostLike, onDeletePost }) => {
-   return ( <>
+const ListPosts = ({ data, user, onChangePostLike, onDeletePost, onCreatePost }) => {
+  const numEachPage = 9;
+
+  const [ minValue, setminValue ] = useState(0);
+  const [ maxValue, setmaxValue ] = useState(9);
+
+  const handleChange = (value) => {
+      setminValue((value - 1) * numEachPage),
+      setmaxValue(value * numEachPage)
+  };
+  
+  return ( <>
     <div className={styles.listposts}>
-      {data?.map((item) => (
+      {data.length > 0 && 
+      data?.slice(minValue, maxValue).map((item) => (
         <Post
           user={user}
           onChangePostLike={onChangePostLike}
@@ -16,7 +27,10 @@ const ListPosts = ({ data, user, onChangePostLike, onDeletePost }) => {
         />
       ))}
     </div>
-     <Pagination defaultCurrent={1} total={10} className={styles.pagination}/>
+     <Pagination defaultCurrent={1} 
+      defaultPageSize={numEachPage} 
+      onChange={handleChange}
+      total={data.length}/>
     </> 
   )
 }

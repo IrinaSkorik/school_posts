@@ -1,0 +1,14 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 150px;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    max-width: 30px;
+}

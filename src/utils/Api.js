@@ -16,19 +16,31 @@ class Api {
             .then(onResponse);
     }
 
+    getPost(id) {
+        return fetch(`${this._url}/posts/${id}`, {headers: this._headers})
+            .then(onResponse);
+    }
+
     getUserInfo() {
         return fetch(`${this._url}/users/me`, {headers: this._headers})
             .then(onResponse);
     }
 
-    // addCat(bodyData) {
-    //     return fetch(`${this._url}/add`, {
-    //             method: "POST",
-    //             headers: this._headers,
-    //             body: JSON.stringify(bodyData)
-    //         })
-    //         .then(onResponse)
-    // }
+    createPost(data) {
+        return fetch(`${this._url}/posts`, {
+          method: "POST",
+          headers: this._headers,
+          body: JSON.stringify(data),
+        }).then(onResponse);
+    }
+
+    updatePostInfo({ data, id }) {
+        return fetch(`${this._url}/posts/${id}`, {
+          method: "PATCH",
+          headers: this._headers,
+          body: JSON.stringify(data),
+        }).then(onResponse);
+      }
 
     changePostLike(isLike, id) {
         return fetch(`${this._url}/posts/likes/${id}`, {
@@ -56,4 +68,6 @@ const api = new Api({
         }
 })
 
+
+ 
 export default api;

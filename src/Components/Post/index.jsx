@@ -5,6 +5,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { LikeOutlined, LikeFilled, LikeTwoTone, DeleteTwoTone } from '@ant-design/icons';
 import styles from "./index.modules.css";
+import { Link } from 'react-router-dom';
 
 const Post = ({ _id, author, title, tags, created_at, updated_at, text, likes, user, onChangePostLike, onDeletePost }) => {
 
@@ -33,9 +34,9 @@ const Post = ({ _id, author, title, tags, created_at, updated_at, text, likes, u
   }
 
   return (
-      <Card title={title} extra={<a href="#">More</a>} style={{ width: 400 }}>
+      <Card title={title} extra={<Link to={`/post/${_id}`}>More</Link>} style={{ width: 400 }}>
         <div>
-          <Avatar icon={<UserOutlined />} /><b>{author.email}</b>
+          <Avatar icon={<UserOutlined />} /><b>{(author == undefined)?"":author.email}</b>
           <p>{text}</p>
         </div>
         <p>Tags: {tags.map((elem, index) => (
@@ -49,7 +50,7 @@ const Post = ({ _id, author, title, tags, created_at, updated_at, text, likes, u
           <div>
             <ValueLike likes={likes} isFavourite={isFavourite} onClick={handleClick} /> {likes.length}
           </div>
-          <DeleteTwoTone twoToneColor="#FF0000" onClick={handleClickDelete}/>
+          {(author==undefined)?"":((author._id==user._id)?<DeleteTwoTone twoToneColor="#FF0000" onClick={handleClickDelete}/>:"")}
         </div>
       </Card>
   )

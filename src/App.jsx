@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Footer from "./Components/Footer";
 import Header from "./Components/Header";
-import Title from "./Components/Title";
-import ListPosts from "./Components/ListPosts";
 import Api from "./utils/Api";
+import PageAllPost from "./pages/PageAllPost/PageAllPost";
+import PageDetailPost from "./pages/PageDetailPost";
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   const [ posts, setPosts ] = useState([]);
@@ -27,22 +28,28 @@ const App = () => {
    });
   };
 
+  const createPost = (data) => {
+    Api.createPost(data).then((newPost) => {
+      posts.push(newPost);
+  });
+  };
+
   const deletePost = (id) => {
     Api.deletePost(id).then(() => {
       const newPosts = posts.filter((el) => el._id != id );
       setPosts(newPosts);
-   }, (reason) => {
-    if(reason.status==403) alert('Нельзя удалить чужую карточку!') 
-    else alert(`Ошибка: ${reason.status} ${reason.statusText}`)})
+   });
   };
 
   return (<div>
     <Header ref1_text={"Home"} ref1={"#"}
       ref2_text={"Remix Docx"} ref2={"https://remix.run/docs"}
       ref3_text={"GitHub"} ref3={"https://github.com/IrinaSkorik/school_posts"} />
-    <Title title={"Добро пожаловать на нашу волшебную доску сообщений!"}
-      subtitle={"Мы в восторге от того, что вы здесь!"} textButton={"Создать пост"} onClick={() => alert("Жмяк!")} />
-    <ListPosts data={posts} user={user} onChangePostLike={changePostLike} onDeletePost={deletePost} />
+        <Routes>
+          <Route path="/" element={<PageAllPost posts={posts} user={user} onChangePostLike={changePostLike} onDeletePost={deletePost} onCreatePost={createPost}/>} />
+          <Route path="/post/:postId" element={<PageDetailPost user={user} />} />
+          {/* <Route path="*" element={<NotFoundPage />} /> */}
+        </Routes>
     <Footer text={"©SkorikIrina"} />
   </div>
   );
