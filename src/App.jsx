@@ -34,14 +34,14 @@ const App = () => {
   });
   };
 
-  const updatePost = (id, data) => {
-    Api.updatePost(id, data).then((newPost) => {
-      const newPosts = posts.map((el) =>
-        el._id === id ? newPost : el
-      );
-    setPosts(newPosts);
-  });
-  };
+  // const updatePost = (id, data) => {
+  //   Api.updatePost(id, data).then((newPost) => {
+  //     const newPosts = posts.map((el) =>
+  //       el._id === id ? newPost : el
+  //     );
+  //    setPosts(newPosts);
+  // });
+  // };
 
   const deletePost = (id) => {
     Api.deletePost(id).then(() => {
@@ -56,7 +56,7 @@ const App = () => {
       ref3_text={"GitHub"} ref3={"https://github.com/IrinaSkorik/school_posts"} />
         <Routes>
           <Route path="/" element={<PageAllPost posts={posts} user={user} onChangePostLike={changePostLike} onDeletePost={deletePost} onCreatePost={createPost}/>} />
-          <Route path="/post/:postId" element={<PageDetailPost user={user} onUpdatePost={updatePost}/>} />
+          <Route path="/post/:postId" element={<PageDetailPost user={user} />} />
           {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
     <Footer text={"©SkorikIrina"} />

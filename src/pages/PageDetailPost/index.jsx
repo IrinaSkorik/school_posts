@@ -9,9 +9,9 @@ import { useParams } from "react-router-dom";
 import Api from "../../utils/Api";
 import { Link } from "react-router-dom";
 import Modal from "../../Components/Modal";
-import FormUpdate from "../../Components/FormUpdate";
+import Form from "../../Components/Forms";
 
-const PageDetailPost = ({ onUpdatePost }) => { 
+const PageDetailPost = () => { 
     const [post, setPost] = useState({});
     const [error, setError] = useState("");
     const {postId} = useParams();
@@ -25,6 +25,11 @@ const PageDetailPost = ({ onUpdatePost }) => {
           })
           .catch((error) => setError("Поста не существует"));
       }, []);  
+
+      const updatePost = (id, data) => {
+        Api.updatePost(id, data).then((newPost) => { setPost(newPost);
+        });
+      };
 
     const dateCreatedOb = new Date(Date.parse(post.created_at));
     const dateCreated = `${dateCreatedOb.toLocaleDateString()}, ${dateCreatedOb.toLocaleTimeString()}`;
@@ -53,7 +58,7 @@ const PageDetailPost = ({ onUpdatePost }) => {
             <Tag key={index}>{elem}</Tag>
         ))}</p>
         <Button text="Редактировать" onClick={() => setModal(true)}/>
-        <Modal active={modalFormOpen} setActive={setModal}><FormUpdate data={post} onUpdatePost={onUpdatePost} setActive={setModal} /></Modal>
+        <Modal active={modalFormOpen} setActive={setModal}><Form data={post} onUpdatePost={updatePost} setActive={setModal} postId={postId} /></Modal>
         </div>
 )
 }

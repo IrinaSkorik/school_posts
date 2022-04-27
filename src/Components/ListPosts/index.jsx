@@ -3,7 +3,7 @@ import { Pagination } from 'antd';
 import Post from "../Post";
 import styles from "./index.modules.css";
 
-const ListPosts = ({ data, user, onChangePostLike, onDeletePost, onCreatePost }) => {
+const ListPosts = ({ data, user, onChangePostLike, onDeletePost }) => {
   const numEachPage = 9;
 
   const [ minValue, setminValue ] = useState(0);
