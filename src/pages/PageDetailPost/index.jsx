@@ -8,11 +8,14 @@ import Button from "../../Components/Button";
 import { useParams } from "react-router-dom";
 import Api from "../../utils/Api";
 import { Link } from "react-router-dom";
+import Modal from "../../Components/Modal";
+import FormUpdate from "../../Components/FormUpdate";
 
-const PageDetailPost = ( { user } ) => { 
+const PageDetailPost = ({ onUpdatePost }) => { 
     const [post, setPost] = useState({});
     const [error, setError] = useState("");
     const {postId} = useParams();
+    const [ modalFormOpen, setModal ] = useState(false);
 
     useEffect(() => {
         Api
@@ -20,7 +23,7 @@ const PageDetailPost = ( { user } ) => {
           .then((data) => {
             setPost(data);
           })
-          .catch((err) => setError("Поста не существует"));
+          .catch((error) => setError("Поста не существует"));
       }, []);  
 
     const dateCreatedOb = new Date(Date.parse(post.created_at));
@@ -49,7 +52,8 @@ const PageDetailPost = ( { user } ) => {
         <p>Tags: {(post.tags == undefined)?"":post.tags.map((elem, index) => (
             <Tag key={index}>{elem}</Tag>
         ))}</p>
-        <Button text="Редактировать" />
+        <Button text="Редактировать" onClick={() => setModal(true)}/>
+        <Modal active={modalFormOpen} setActive={setModal}><FormUpdate data={post} onUpdatePost={onUpdatePost} setActive={setModal} /></Modal>
         </div>
 )
 }

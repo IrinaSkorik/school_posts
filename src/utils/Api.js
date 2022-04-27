@@ -34,7 +34,7 @@ class Api {
         }).then(onResponse);
     }
 
-    updatePostInfo({ data, id }) {
+    updatePost({ id, data }) {
         return fetch(`${this._url}/posts/${id}`, {
           method: "PATCH",
           headers: this._headers,
